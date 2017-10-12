@@ -1,4 +1,4 @@
-{% set version = '2.0-5' %}
+{% set version = '2.0-13' %}
 
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
@@ -12,47 +12,92 @@ source:
   url:
     - https://cran.r-project.org/src/contrib/glmnet_{{ version }}.tar.gz
     - https://cran.r-project.org/src/contrib/Archive/glmnet/glmnet_{{ version }}.tar.gz
-  sha256: 2ca95352c8fbd93aa7800f3d972ee6c1a5fcfeabc6be8c10deee0cb457fd77b1
+  sha256: f3288dcaddb2f7014d42b755bede6563f73c17bc87f8292c2ef7776cb9b9b8fd
+
+
+  # patches:
+   # List any patch files here
+   # - fix.patch
 
 build:
+  # If this is a new build for the same version, increment the build number.
   number: 0
-  skip: true  # [win32]
+
+  # This is required to make R link correctly on Linux.
   rpaths:
     - lib/R/lib/
     - lib/
 
+# Suggests: survival, knitr, lars
 requirements:
   build:
     - r-base
+    - {{ compiler('c') }}        # [not win]
+    - {{ compiler('fortran') }}  # [not win]
+    - {{native}}toolchain        # [win]
+    - {{posix}}filesystem        # [win]
+    - {{posix}}autoconf
+    - {{posix}}automake
+    - {{posix}}pkg-config
+    - {{posix}}make
     - r-matrix >=1.0_6
     - r-foreach
-    - posix                # [win]
-    - {{native}}toolchain  # [win]
-    - gcc                  # [not win]
 
   run:
     - r-base
+    - {{native}}gcc-libs         # [win]
     - r-matrix >=1.0_6
     - r-foreach
-    - libgcc  # [not win]
 
 test:
   commands:
-    - $R -e "library('glmnet')"  # [not win]
+    # You can put additional test commands to be run here.
+    - $R -e "library('glmnet')"           # [not win]
     - "\"%R%\" -e \"library('glmnet')\""  # [win]
+
+  # You can also put a file called run_test.py, run_test.sh, or run_test.bat
+  # in the recipe that will be run at test time.
+
+  # requires:
+    # Put any additional test requirements here.
 
 about:
   home: http://www.jstatsoft.org/v33/i01/.
   license: GPL-2
-  summary: 'Extremely efficient procedures for fitting the entire lasso or elastic-net regularization
+  summary: Extremely efficient procedures for fitting the entire lasso or elastic-net regularization
     path for linear regression, logistic and multinomial regression models, Poisson
     regression and the Cox model. Two recent additions are the multiple-response Gaussian,
-    and the grouped multinomial. The algorithm uses cyclical coordinate descent in a
-    path-wise fashion, as described in the paper linked to via the URL below. '
-
+    and the grouped multinomial regression. The algorithm uses cyclical coordinate descent
+    in a path-wise fashion, as described in the paper linked to via the URL below.
   license_family: GPL2
 
 extra:
   recipe-maintainers:
     - johanneskoester
     - bgruening
+    - mingwandroid
+
+# The original CRAN metadata for this package was:
+
+# Package: glmnet
+# Type: Package
+# Title: Lasso and Elastic-Net Regularized Generalized Linear Models
+# Version: 2.0-13
+# Date: 2017-09-21
+# Author: Jerome Friedman [aut, cre], Trevor Hastie [aut, cre], Noah Simon [aut, ctb], Junyang Qian [ctb], Rob Tibshirani [aut, cre]
+# Maintainer: Trevor Hastie <hastie@stanford.edu>
+# Depends: Matrix (>= 1.0-6), utils, foreach
+# Imports: methods
+# Suggests: survival, knitr, lars
+# Description: Extremely efficient procedures for fitting the entire lasso or elastic-net regularization path for linear regression, logistic and multinomial regression models, Poisson regression and the Cox model. Two recent additions are the multiple-response Gaussian, and the grouped multinomial regression. The algorithm uses cyclical coordinate descent in a path-wise fashion, as described in the paper linked to via the URL below.
+# License: GPL-2
+# VignetteBuilder: knitr
+# URL: http://www.jstatsoft.org/v33/i01/.
+# NeedsCompilation: yes
+# Packaged: 2017-09-21 22:42:34 UTC; hastie
+# Repository: CRAN
+# Date/Publication: 2017-09-22 05:43:14 UTC
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml

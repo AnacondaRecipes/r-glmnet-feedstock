@@ -1,4 +1,4 @@
-{% set version = '2.0-13' %}
+{% set version = '2.0-16' %}
 
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
@@ -12,18 +12,12 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/glmnet_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/glmnet/glmnet_{{ version }}.tar.gz
-  sha256: f3288dcaddb2f7014d42b755bede6563f73c17bc87f8292c2ef7776cb9b9b8fd
-
-
-  # patches:
-   # List any patch files here
-   # - fix.patch
+  sha256: a54ccd802fce6625f3b69d747b28efe62ed8cc23397a5f8df4777d177e2839af
 
 build:
   merge_build_host: True  # [win]
   # If this is a new build for the same version, increment the build number.
   number: 0
-
 
   # This is required to make R link correctly on Linux.
   rpaths:
@@ -89,9 +83,9 @@ extra:
 # Package: glmnet
 # Type: Package
 # Title: Lasso and Elastic-Net Regularized Generalized Linear Models
-# Version: 2.0-13
-# Date: 2017-09-21
-# Author: Jerome Friedman [aut, cre], Trevor Hastie [aut, cre], Noah Simon [aut, ctb], Junyang Qian [ctb], Rob Tibshirani [aut, cre]
+# Version: 2.0-16
+# Date: 2018-03-12
+# Author: Jerome Friedman [aut, cre], Trevor Hastie [aut, cre], Rob Tibshirani [aut, cre], Noah Simon [aut, ctb], Balasubramanian Narasimhan [ctb], Junyang Qian [ctb]
 # Maintainer: Trevor Hastie <hastie@stanford.edu>
 # Depends: Matrix (>= 1.0-6), utils, foreach
 # Imports: methods
@@ -101,9 +95,9 @@ extra:
 # VignetteBuilder: knitr
 # URL: http://www.jstatsoft.org/v33/i01/.
 # NeedsCompilation: yes
-# Packaged: 2017-09-21 22:42:34 UTC; hastie
+# Packaged: 2018-03-12 04:20:32 UTC; hastie
 # Repository: CRAN
-# Date/Publication: 2017-09-22 05:43:14 UTC
+# Date/Publication: 2018-04-02 12:06:40 UTC
 
 # See
 # http://docs.continuum.io/conda/build.html for

@@ -8,7 +8,6 @@ package:
   version: {{ version|replace("-", "_") }}
 
 source:
-  fn: glmnet_{{ version }}.tar.gz
   url:
     - {{ cran_mirror }}/src/contrib/glmnet_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/glmnet/glmnet_{{ version }}.tar.gz
@@ -31,13 +30,10 @@ requirements:
     - {{ compiler('fortran') }}  # [not win]
     - {{native}}toolchain        # [win]
     - {{posix}}filesystem        # [win]
-    - {{posix}}sed               # [win]
-    - {{posix}}grep              # [win]
-    - {{posix}}autoconf
-    - {{posix}}automake-wrapper  # [win]
-    - {{posix}}automake          # [not win]
-    - {{posix}}pkg-config
     - {{posix}}make
+    - {{posix}}sed               # [win]
+    - {{posix}}coreutils         # [win]
+    - {{posix}}zip               # [win]
 
   host:
     - r-base

@@ -67,6 +67,7 @@ about:
     and the grouped multinomial regression. The algorithm uses cyclical coordinate descent
     in a path-wise fashion, as described in the paper linked to via the URL below.
   license_family: GPL2
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'
 
 extra:
   recipe-maintainers:
